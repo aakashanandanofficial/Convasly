@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#7d2ae8">
+  <title>Canvasly — Photo editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=Oswald:wght@400;500;600;700&family=Bebas+Neue&family=Anton&family=Cormorant+Garamond:wght@400;500;600;700&family=Raleway:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&family=Abril+Fatface&family=Pacifico&family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;600;700&family=Outfit:wght@400;500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="Canvasly home"><span class="brand-mark">C</span><span class="brand-name">canvasly</span></a>
+  <div class="doc-name"><span class="autosave-dot"></span><input id="projectName" value="Untitled design" aria-label="Project name"><span class="save-state" id="saveState">All changes saved</span></div>
+  <div class="top-tools"><button class="top-btn" id="projectsBtn">My designs</button><button class="icon-btn" id="undoBtn" title="Undo">↶</button><button class="icon-btn" id="redoBtn" title="Redo">↷</button><span class="top-divider"></span><button class="top-btn" id="deleteProjectBtn" title="Delete this project">Delete project</button><button class="top-btn" id="helpBtn">Help</button><button class="export-btn" id="exportBtn">Download <span>⌄</span></button></div>
+</header>
+<main class="editor">
+  <nav class="rail" aria-label="Editor tools">
+    <button class="rail-item active" data-panel="design"><span>▧</span><small>Design</small></button>
+    <button class="rail-item" data-panel="uploads"><span>⇧</span><small>Uploads</small></button>
+    <button class="rail-item" data-panel="elements"><span>✦</span><small>Elements</small></button>
+    <button class="rail-item" data-panel="text"><span>T</span><small>Text</small></button>
+    <button class="rail-item" data-panel="background"><span>◩</span><small>Background</small></button>
+    <button class="rail-item" data-panel="layers"><span>▤</span><small>Layers</small></button>
+  </nav>
+  <aside class="sidepanel" id="sidePanel">
+    <div class="panel-title"><h1 id="panelHeading">Design</h1><button class="close-panel" aria-label="Hide panel">‹</button></div>
+    <section class="panel-section" id="panel-design">
+      <div class="search"><span>⌕</span><input id="templateSearch" placeholder="Search templates"></div>
+      <div class="section-label"><b>Free background templates</b><span class="hint-small" id="templateCount">670 designs</span></div>
+      <div class="template-filters"><select id="templateCategory"><option value="all">All backgrounds</option><option>Computer</option><option>Flower</option><option>Space</option><option>Christmas</option><option>Abstract</option><option>Birthday</option><option>Pattern</option><option>Motivational</option><option>Texture</option><option>Minimal</option><option>Nature</option><option>Gradient</option></select><select id="templateSort"><option value="relevant">Most relevant</option><option value="az">Name A to Z</option><option value="za">Name Z to A</option></select></div>
+      <button class="all-templates-btn" id="browseTemplates">Browse all 670 templates <span>→</span></button>
+      <div class="template-grid" id="templateGrid"></div>
+      <p class="panel-note">Choose a starting layout, then make it yours with your own photos, colors and type.</p>
+      <div class="section-label section-gap"><b>Suggested styles</b><span class="sparkle">✦</span></div>
+      <div class="style-pills"><button data-palette="orchid">Orchid glow</button><button data-palette="sunset">Golden hour</button><button data-palette="ocean">Blue hour</button><button data-palette="forest">Evergreen</button></div>
+    </section>
+    <section class="panel-section hidden" id="panel-uploads">
+      <div class="search"><span>⌕</span><input placeholder="Search uploads"></div>
+      <button class="upload-button" data-file="imageFile"><span class="upload-icon">↑</span><b>Upload images</b><small>JPG, PNG, WebP</small></button>
+      <input id="imageFile" type="file" accept="image/*" multiple hidden>
+      <div class="upload-drop" id="uploadDrop">Drop an image here</div>
+      <div class="section-label section-gap"><b>Your uploads</b></div><div class="upload-list" id="uploadList"><div class="empty-uploads">Your images will appear here.</div></div>
+    </section>
+    <section class="panel-section hidden" id="panel-elements">
+      <div class="search"><span>⌕</span><input placeholder="Search elements"></div><div class="section-label"><b>Shapes</b></div>
+      <div class="shape-grid"><button data-shape="rect">▰<small>Rectangle</small></button><button data-shape="circle">●<small>Circle</small></button><button data-shape="line">／<small>Line</small></button><button data-shape="star">☆<small>Star</small></button></div>
+      <div class="section-label section-gap"><b>Stickers</b><span class="hint-small">Tap to add</span></div><div class="sticker-grid"><button>✦</button><button>♡</button><button>✿</button><button>☼</button><button>✷</button><button>❋</button></div>
+      <p class="panel-note">Shapes and stickers are added as editable layers on your design.</p>
+    </section>
+    <section class="panel-section hidden" id="panel-text">
+      <button class="add-text-btn" id="addHeading">＋ Add a heading</button><button class="add-text-btn secondary" id="addSubheading">＋ Add a subheading</button><button class="add-text-btn secondary" id="addBody">＋ Add body text</button>
+      <div class="section-label section-gap"><b>Text styles</b></div>
+      <button class="text-style-card" data-style="classic"><span class="style-preview classic">Aa</span><span><b>Classic editorial</b><small>Elegant serif pairing</small></span><i>＋</i></button>
+      <button class="text-style-card" data-style="bold"><span class="style-preview bold">Aa</span><span><b>Bold statement</b><small>Big, confident type</small></span><i>＋</i></button>
+      <button class="text-style-card" data-style="script"><span class="style-preview script">Aa</span><span><b>Handwritten note</b><small>Soft script lettering</small></span><i>＋</i></button>
+      <button class="text-style-card" data-style="poster"><span class="style-preview poster">Aa</span><span><b>Modern poster</b><small>Strong display type</small></span><i>＋</i></button>
+      <button class="text-style-card" data-style="friendly"><span class="style-preview friendly">Aa</span><span><b>Friendly rounded</b><small>Warm and approachable</small></span><i>＋</i></button>
+      <button class="text-style-card" data-style="minimal"><span class="style-preview minimal">Aa</span><span><b>Quiet minimal</b><small>Simple clean lettering</small></span><i>＋</i></button>
+    </section>
+    <section class="panel-section hidden" id="panel-background">
+      <div class="section-label"><b>Background color</b></div><div class="color-options" id="backgroundColors"></div>
+      <div class="section-label section-gap"><b>Gradient</b></div><div class="gradient-grid"><button class="gradient-swatch" data-gradient="sunset"></button><button class="gradient-swatch" data-gradient="berry"></button><button class="gradient-swatch" data-gradient="sea"></button><button class="gradient-swatch" data-gradient="citrus"></button></div>
+      <div class="section-label section-gap"><b>Texture</b><span class="hint-small">Overlay</span></div><div class="texture-options" id="textureOptions"></div><label class="control-label">Texture strength <output id="textureValue">16%</output></label><input class="slider" id="textureRange" type="range" min="0" max="50" value="16">
+      <div class="section-label section-gap"><b>Upload a background</b></div><button class="add-text-btn secondary" data-file="imageFile">↑ Choose image</button>
+    </section>
+    <section class="panel-section hidden" id="panel-layers"><div class="section-label"><b>Layers</b><span class="hint-small">Select to edit</span></div><div class="layer-list" id="layerList"></div></section>
+    <section class="panel-section hidden" id="panel-adjust"></section>
+    <section class="panel-section hidden" id="panel-crop"></section>
+  </aside>
+  <section class="workspace" id="workspace">
+    <div class="contextbar hidden" id="contextbar"></div>
+    <div class="canvas-stage" id="canvasStage"><div class="page" id="page"><canvas id="designCanvas" width="1600" height="1000"></canvas><div class="selection-box hidden" id="selectionBox"><span class="handle nw"></span><span class="handle ne"></span><span class="handle sw"></span><span class="handle se"></span></div></div></div>
+    <div class="bottom-bar"><div class="page-info"><button class="page-square">▧</button><span id="pageName">Page 1</span><button class="more-btn">···</button></div><div class="zoom-controls"><button id="zoomOut">−</button><input id="zoomRange" type="range" min="40" max="120" value="70"><button id="zoomIn">＋</button><span id="zoomValue">70%</span><span class="zoom-divider"></span><button class="fit-btn" id="fitBtn">⛶</button></div></div>
+  </section>
+  <aside class="inspector" id="inspector"><div class="inspector-empty"><div class="inspector-glyph">✦</div><b>Make it yours</b><p>Select an image, text or shape on your design to see its editing tools.</p></div></aside>
+</main>
+<div class="modal-backdrop hidden" id="modal"><div class="modal"><button class="modal-close" id="modalClose">×</button><h2 id="modalTitle">Download your design</h2><p id="modalCopy">Choose a format for your finished design.</p><div class="download-options"><button class="download-option selected" data-format="png"><span>PNG</span><small>Best for sharing online</small><b>✓</b></button><button class="download-option" data-format="jpeg"><span>JPG</span><small>Smaller file size</small><b></b></button></div><button class="export-confirm" id="confirmExport">Download</button></div></div>
+<div class="projects-backdrop hidden" id="projectsModal"><section class="projects-modal"><button class="modal-close" id="projectsClose">×</button><div class="projects-heading"><div><h2>Your designs</h2><p>Open a saved project or remove one you no longer need.</p></div><button class="new-project-btn" id="newProjectBtn">＋ New design</button></div><div class="projects-grid" id="projectsGrid"></div></section></div>
+<div class="templates-backdrop hidden" id="templatesModal"><section class="templates-library"><button class="modal-close" id="templatesClose">×</button><header class="library-header"><div><h2>Background templates</h2><p>670 original designs for this editor. Hover over one and choose <b>Edit this template</b> to customize it here.</p></div><span class="library-free">✦ 670 free templates</span></header><div class="library-controls"><label class="library-search"><span>⌕</span><input id="gallerySearch" placeholder="Search 670 templates by name or style"></label><select id="galleryCategory"><option value="all">All categories</option><option>Computer</option><option>Flower</option><option>Space</option><option>Christmas</option><option>Abstract</option><option>Birthday</option><option>Pattern</option><option>Motivational</option><option>Texture</option><option>Minimal</option><option>Nature</option><option>Gradient</option></select><select id="gallerySort"><option value="relevant">Most relevant</option><option value="az">Name A to Z</option><option value="za">Name Z to A</option></select></div><div class="gallery-count" id="galleryCount"></div><div class="gallery-grid" id="allTemplateGrid"></div><div class="gallery-footer"><button id="showMoreTemplates">Show more templates</button></div></section></div>
+<div class="toast" id="toast"></div><script src="app.js"></script>
+</body></html>

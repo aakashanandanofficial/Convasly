@@ -1,0 +1,12 @@
+{
+  "name": "canvasly-background-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A Canva-inspired local photo and background editor.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
